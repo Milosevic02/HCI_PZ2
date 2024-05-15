@@ -5,8 +5,260 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NetworkService"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="806" Width="1428">
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="CustomButtonStyle">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                          x:Name="border"
+                          Background="White"
+                          BorderBrush="Black"
+                          BorderThickness="3"
+                          CornerRadius="15"
+                          Width="150"
+                          Height="50"
+                          Cursor="Hand">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="LightGray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontFamily" Value="Agency FB"/>
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+
+        <Style TargetType="TextBox" x:Key="CustomTextBoxStyle">
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontFamily" Value="Agency FB"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="CustomTextBlockStyle">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="Text" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+
+            <Setter Property="FontFamily" Value="Agency FB"/>
+
+
+        </Style>
+        <Style TargetType="ComboBox" x:Key="CustomComboBoxStyle">
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="35"/>
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="16*" />
+            <ColumnDefinition Width="159*" />
+            <ColumnDefinition Width="160*" />
+        </Grid.ColumnDefinitions>
+
+        <Rectangle Grid.Column="0" Fill="MediumPurple">
+
+
+        </Rectangle>
+
+        <Image Name="GraphImage"
+               Source="Images/graph.jpg"
+               MouseLeftButtonDown="GraphImage_MouseLeftButtonDown"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Center" Margin="0,428,0,0"/>
+
+        <Image Name="TableImage"
+               Source="Images/table2.jpg"
+               MouseLeftButtonDown="TableImage_MouseLeftButtonDown"
+               
+               VerticalAlignment="Top"
+               HorizontalAlignment="Center" Margin="0,142,0,0"/>
+
+        <Image Name="ShutdownImage"
+               Source="Images/shutdown.jpg"
+               MouseLeftButtonDown="ShutdownImage_MouseLeftButtonDown"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Center" Margin="0,638,0,0" Width="64"/>
+
+        <DataGrid 
+     x:Name="ValvesDataGrid" 
+     ItemsSource="{Binding Valves}" 
+     AutoGenerateColumns="False"
+     CanUserAddRows="False"
+     ScrollViewer.CanContentScroll="False" 
+     ScrollViewer.VerticalScrollBarVisibility="Auto"
+     ScrollViewer.HorizontalScrollBarVisibility="Auto" Canvas.Left="119" Canvas.Top="118" Height="264" Width="602" HorizontalAlignment="Center" VerticalAlignment="Top"
+     SelectionChanged="ValvesDataGrid_SelectionChanged" Grid.Column="2" Margin="0,28,0,0"
+     >
+
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn
+         Header="ID"
+         Binding="{Binding IsChecked}"
+         Width="65"
+         >
+
+                </DataGridCheckBoxColumn>
+
+                <DataGridTemplateColumn Header="Name" Width="*" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock TextAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Foreground" Value="white"/>
+
+                                            </Trigger>
+
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+
+
+                <DataGridTemplateColumn Header="Type" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image   Source="{Binding Image}" Width="100" Height="100"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTextColumn 
+         Header="Value" 
+         IsReadOnly="True"
+         Width="*"
+         Binding="{Binding Date}"
+         >
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button
+          x:Name="DeleteButton"
+          Style="{StaticResource CustomButtonStyle}"
+          Content="Delete"
+          ToolTip="Delete"
+          Click="DeleteButton_Click"
+  
+          HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="2" Margin="477,297,0,0"
+          />
+
+        <Rectangle Width="600" Height="85" Grid.Column="2" Fill="MediumPurple" Margin="40,360,40,344"/>
+        <TextBlock VerticalAlignment="Top" Style="{StaticResource CustomTextBlockStyle}" Text="Add New Valve:" Grid.Column="2" Margin="77,388,470,0" RenderTransformOrigin="0.126,0.494"></TextBlock>
+        <ComboBox Grid.Column="2" Margin="248,388,237,372" Style="{StaticResource CustomComboBoxStyle}" Name="TypeAddComboBox" SelectionChanged="TypeAddComboBox_SelectionChanged">
+            <ComboBoxItem Content="Cable sensor"/>
+            <ComboBoxItem Content="Digital pressure gauge"/>
+
+        </ComboBox>
+
+        <Button
+            x:Name="AddButton"
+            Style="{StaticResource CustomButtonStyle}"
+            Content="Add"
+            ToolTip="Add"
+            Click="AddButton_Click" Grid.Column="2" Margin="469,363,47,344">
+
+        </Button>
+
+        <Rectangle Width="600" Height="300" Fill="MediumPurple" Grid.Column="2" Margin="42,462,40,22"/>
+
+        <Label Grid.Column="2" Margin="42,465,538,266" FontSize="18" Foreground="White" FontWeight="Bold" FontFamily="Agency FB">Filter:</Label>
+
+        <TextBlock Style="{StaticResource CustomTextBlockStyle}" Text="ID:" Margin="62,504,573,224" Grid.Column="2"/>
+        <TextBox Style="{StaticResource CustomTextBoxStyle}" Name="IDTextBox" Margin="158,504,324,246" Grid.Column="2"/>
+        <Label 
+        x:Name="IDErrorLabel"
+        Content=""
+        Foreground="Red" Margin="158,548,264,207" Grid.Column="2"/>
+
+        <TextBlock Style="{StaticResource CustomTextBlockStyle}" Text="Type:" Grid.Column="2" Margin="62,584,538,158"></TextBlock>
+        <ComboBox Grid.Column="2" Style="{StaticResource CustomComboBoxStyle}" Name="TypeFilterComboBox" SelectionChanged="TypeFilterComboBox_SelectionChanged" Margin="158,583,324,172">
+            <ComboBoxItem Content="Cable sensor"/>
+            <ComboBoxItem Content="Digital pressure gauge"/>
+        </ComboBox>
+        <Label 
+            x:Name="TypeFilterErrorLabel"
+            Content=""
+            Foreground="Red" Margin="158,623,264,132" Grid.Column="2"/>
+
+        <TextBlock Style="{StaticResource CustomTextBlockStyle}" Text="Filters:" Grid.Column="2" Margin="62,658,524,74"></TextBlock>
+        <ComboBox Grid.Column="2" Style="{StaticResource CustomComboBoxStyle}" x:Name="FiltersComboBox" SelectionChanged="FiltersComboBox_SelectionChanged" Margin="158,658,324,97">
+            <ComboBoxItem Content="Cable sensor"/>
+            <ComboBoxItem Content="Digital pressure gauge"/>
+        </ComboBox>
+        <Label 
+            x:Name="IDErrorLabel_Copy"
+            Content=""
+            Foreground="Red" Margin="158,693,264,62" Grid.Column="2"/>
+
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left"
+                    RenderTransformOrigin="3.796,1.67" Grid.Column="2" Margin="398,504,0,0" Width="229">
+            <StackPanel Orientation="Vertical" Margin="5,0">
+                <TextBlock Text="Higher" Foreground="White" FontSize="16" HorizontalAlignment="Center"/>
+                <RadioButton Name="Higher" GroupName="Filter" Checked="Higher_Checked" HorizontalAlignment="Center"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Margin="5,0">
+                <TextBlock Text="Equals" Foreground="White" FontSize="16" HorizontalAlignment="Center"/>
+                <RadioButton Name="Equals" GroupName="Filter" Checked="Equals_Checked" HorizontalAlignment="Center"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Margin="5,0">
+                <TextBlock Text="Lower" Foreground="White" FontSize="16"/>
+                <RadioButton x:Name="Lower" GroupName="Filter" Checked="Lower_Checked" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </StackPanel>
+
+        <Button x:Name="SaveButton"
+        Style="{StaticResource CustomButtonStyle}"
+        Content="Save"
+        ToolTip="Save"
+        Click="SaveButton_Click" Grid.Column="2" Margin="432,556,47,143"></Button>
+
+        <Button  x:Name="ResetButton"
+        Style="{StaticResource CustomButtonStyle}"
+        Content="Reset"
+        ToolTip="Reset"
+        Click="ResetButton_Click" Grid.Column="2" Margin="415,631,30,81">
+            
+        </Button>
+
     </Grid>
 </Window>

@@ -99,5 +99,14 @@
     <Folder Include="Model\" />
     <Folder Include="Views\" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\graph.jpg" />
+    <Resource Include="Images\graph2.jpg" />
+    <Resource Include="Images\table.jpg" />
+    <Resource Include="Images\table2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\shutdown.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
