@@ -16,11 +16,10 @@ namespace NetworkService.Model
         public Type Name {  get; set; }
         public string PicturePath {  get; set; }
 
-        public EntityType(Type name,string picturePath)
+        public EntityType(Type name)
         {
             Name = name;
-            PicturePath = picturePath;
-
+            PicturePath = "Images/" + name.ToString() + ".jpg";
         }
 
     }
