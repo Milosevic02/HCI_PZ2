@@ -199,16 +199,20 @@
         <TextBlock Grid.Column="2" Margin="42,465,538,266" Style="{StaticResource CustomTextBlockStyle}" Text="Filter:"></TextBlock>
 
         <TextBlock Style="{StaticResource CustomTextBlockStyle}" Text="ID:" Margin="62,504,573,224" Grid.Column="2"/>
-        <TextBox Style="{StaticResource CustomTextBoxStyle}" Name="IDTextBox" Margin="0,280,158,10" Grid.Column="2"/>
+        <TextBox Text="{Binding IdText}" Style="{StaticResource CustomTextBoxStyle}" Name="IDTextBox" Margin="0,280,158,10" Grid.Column="2"/>
         <Label 
         x:Name="IDErrorLabel"
         Content=""
         Foreground="Red" Margin="158,548,264,207" Grid.Column="2"/>
 
         <TextBlock Style="{StaticResource CustomTextBlockStyle}" Text="Type:" Grid.Column="2" Margin="62,584,538,158"></TextBlock>
-        <ComboBox Margin="160,580,320,155" Grid.Column="2" Name="TypeFilterComboBox">
-            <ComboBoxItem Content="Cable sensor"/>
-            <ComboBoxItem Content="Digital pressure gauge"/>
+        <ComboBox Margin="160,580,320,155" Grid.Column="2" 
+                   IsEditable="False"
+                     IsTextSearchCaseSensitive="False"
+                     IsTextSearchEnabled="True"
+                     ItemsSource="{Binding Types}"
+                     SelectedItem="{Binding FilterTypeText}">
+            
         </ComboBox>
         <Label 
             x:Name="TypeFilterErrorLabel"
@@ -229,33 +233,35 @@
             RenderTransformOrigin="3.796,1.67" Grid.Column="2" Margin="398,504,0,0" Width="229">
             <StackPanel Orientation="Vertical" Margin="5,0">
                 <TextBlock Text="Higher" Foreground="White" FontSize="16" HorizontalAlignment="Center"/>
-                <RadioButton Name="Higher" GroupName="Filter"  HorizontalAlignment="Center"/>
+                <RadioButton IsChecked="{Binding IsMoreSelected, Mode=TwoWay}" ToolTip="Select more" x:Name="MoreRadioButton" GroupName="Filter"  HorizontalAlignment="Center"/>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Margin="5,0">
                 <TextBlock Text="Equals" Foreground="White" FontSize="16" HorizontalAlignment="Center"/>
-                <RadioButton Name="Equals" GroupName="Filter"  HorizontalAlignment="Center"/>
+                <RadioButton IsChecked="{Binding IsEqualsSelected, Mode=TwoWay}" ToolTip="Select equals" GroupName="Filter"  HorizontalAlignment="Center"/>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Margin="5,0">
                 <TextBlock Text="Lower" Foreground="White" FontSize="16"/>
-                <RadioButton x:Name="Lower" GroupName="Filter" HorizontalAlignment="Center"/>
+                <RadioButton IsChecked="{Binding IsLessSelected, Mode=TwoWay}" ToolTip="Select less" x:Name="LessRadioButton" GroupName="Filter" HorizontalAlignment="Center"/>
             </StackPanel>
         </StackPanel>
 
-        <Button x:Name="SaveButton"
+        <Button x:Name="FilterButton"
+            Style="{StaticResource CustomButtonStyle}"
+            Content="Filter"
+            ToolTip="Filter" Margin="422,380,57,0"
+                Cursor="Hand"
+                Command="{Binding FilterCommand}"/>
+
+        <Button  x:Name="SaveButton"
             Style="{StaticResource CustomButtonStyle}"
             Content="Save"
-            ToolTip="Save" Margin="422,380,57,0"/>
-
+            ToolTip="Save" Margin="405,490,40,0" Click="SaveButton_Click"/>
         <Button  x:Name="ResetButton"
             Style="{StaticResource CustomButtonStyle}"
             Content="Reset"
-            ToolTip="Reset" Margin="405,490,40,0"/>
-        <Button  x:Name="FilterButton"
-            Style="{StaticResource CustomButtonStyle}"
-            Content="Filter"
-            ToolTip="Filter" Margin="405,600,40,0"/>
+            ToolTip="Reset" Margin="405,600,40,0"/>
 
     </Grid>
 </UserControl>
