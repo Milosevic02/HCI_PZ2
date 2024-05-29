@@ -79,10 +79,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BindableBase.cs" />
+    <Compile Include="Helpers\BindableBase.cs" />
+    <Compile Include="Helpers\ValidationBase.cs" />
+    <Compile Include="Helpers\ValidationErrors.cs" />
+    <Compile Include="Model\EntityType.cs" />
     <Compile Include="Model\Valve.cs" />
-    <Compile Include="MyICommand.cs" />
-    <Compile Include="MyICommandWithParameter.cs" />
+    <Compile Include="Helpers\MyICommand.cs" />
+    <Compile Include="Helpers\MyICommandWithParameter.cs" />
     <Compile Include="ViewModel\DragDropViewModel.cs" />
     <Compile Include="ViewModel\GraphViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
@@ -148,6 +151,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\bg1.jpeg" />
+    <Resource Include="Images\bg2.jpeg" />
+    <Resource Include="Images\bg3.jpeg" />
+    <Resource Include="Images\bg4.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\CableSensor.png" />
+    <Resource Include="Images\DigitalManometer.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
