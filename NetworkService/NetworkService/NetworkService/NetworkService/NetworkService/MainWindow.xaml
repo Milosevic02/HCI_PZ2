@@ -8,9 +8,12 @@
         xmlns:views="clr-namespace:NetworkService.Views"
         ResizeMode="NoResize"
         Name="MainWindowName"
+        Background="Transparent"
         mc:Ignorable="d"
         Title="MainWindow" Height="806" Width="1428"
         >
+
+
     <Window.DataContext>
         <viewModel:MainWindowViewModel />
     </Window.DataContext>
@@ -26,14 +29,14 @@
             <views:TableView />
         </DataTemplate>
     </Window.Resources>
-
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="60" />
             <ColumnDefinition Width="684" />
             <ColumnDefinition Width="684" />
         </Grid.ColumnDefinitions>
-
+        
         <Menu Grid.Column="0">
             <MenuItem
                      Name="ImagesUploadPageMenuItem2"

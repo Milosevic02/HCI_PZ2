@@ -23,6 +23,7 @@ namespace NetworkService
         public MainWindow()
         {
             InitializeComponent();
+            
         }
     }
 }

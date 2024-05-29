@@ -158,8 +158,10 @@
     <Resource Include="Images\bg4.jpeg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\CableSensor.png" />
     <Resource Include="Images\DigitalManometer.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\CableSensor.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
