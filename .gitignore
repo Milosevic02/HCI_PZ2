@@ -175,12 +175,12 @@ UpgradeLog*.htm
 # SQL Server files
 *.mdf
 *.ldf
+*.vsidx
 
 # Business Intelligence projects
 *.rdl.data
 *.bim.layout
 *.bim_*.settings
-
 # Microsoft Fakes
 FakesAssemblies/
 
