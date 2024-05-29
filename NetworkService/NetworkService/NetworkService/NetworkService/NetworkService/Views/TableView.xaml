@@ -1,12 +1,17 @@
-﻿<Window x:Class="NetworkService.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:NetworkService"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="806" Width="1428">
-    <Window.Resources>
+﻿<UserControl x:Class="NetworkService.Views.TableView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NetworkService.Views"
+             xmlns:viewModel="clr-namespace:NetworkService.ViewModel" 
+             xmlns:views="clr-namespace:NetworkService.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="806" d:DesignWidth="684">
+    <UserControl.DataContext>
+        <viewModel:TableViewModel />
+    </UserControl.DataContext>
+    <UserControl.Resources>
         <Style TargetType="Button" x:Key="CustomButtonStyle">
             <Setter Property="Template">
                 <Setter.Value>
@@ -58,43 +63,9 @@
 
 
         </Style>
-        <Style TargetType="ComboBox" x:Key="CustomComboBoxStyle">
-            <Setter Property="Width" Value="200"/>
-            <Setter Property="Height" Value="35"/>
-        </Style>
-    </Window.Resources>
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="16*" />
-            <ColumnDefinition Width="159*" />
-            <ColumnDefinition Width="160*" />
-        </Grid.ColumnDefinitions>
-
-        <Rectangle Grid.Column="0" Fill="MediumPurple">
-
-
-        </Rectangle>
-
-        <Image Name="GraphImage"
-               Source="Images/graph.jpg"
-               MouseLeftButtonDown="GraphImage_MouseLeftButtonDown"
-               VerticalAlignment="Top"
-               HorizontalAlignment="Center" Margin="0,428,0,0"/>
-
-        <Image Name="TableImage"
-               Source="Images/table2.jpg"
-               MouseLeftButtonDown="TableImage_MouseLeftButtonDown"
-               
-               VerticalAlignment="Top"
-               HorizontalAlignment="Center" Margin="0,142,0,0"/>
-
-        <Image Name="ShutdownImage"
-               Source="Images/shutdown.jpg"
-               MouseLeftButtonDown="ShutdownImage_MouseLeftButtonDown"
-               VerticalAlignment="Top"
-               HorizontalAlignment="Center" Margin="0,638,0,0" Width="64"/>
-
+    </UserControl.Resources>
+    <Grid Background="White">
         <DataGrid 
      x:Name="ValvesDataGrid" 
      ItemsSource="{Binding Valves}" 
@@ -103,7 +74,7 @@
      ScrollViewer.CanContentScroll="False" 
      ScrollViewer.VerticalScrollBarVisibility="Auto"
      ScrollViewer.HorizontalScrollBarVisibility="Auto" Canvas.Left="119" Canvas.Top="118" Height="264" Width="602" HorizontalAlignment="Center" VerticalAlignment="Top"
-     SelectionChanged="ValvesDataGrid_SelectionChanged" Grid.Column="2" Margin="0,28,0,0"
+      Grid.Column="2" Margin="0,28,0,0"
      >
 
             <DataGrid.ColumnHeaderStyle>
@@ -175,14 +146,15 @@
           Style="{StaticResource CustomButtonStyle}"
           Content="Delete"
           ToolTip="Delete"
-          Click="DeleteButton_Click"
   
           HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="2" Margin="477,297,0,0"
           />
 
         <Rectangle Width="600" Height="85" Grid.Column="2" Fill="MediumPurple" Margin="40,360,40,344"/>
-        <TextBlock VerticalAlignment="Top" Style="{StaticResource CustomTextBlockStyle}" Text="Add New Valve:" Grid.Column="2" Margin="77,388,470,0" RenderTransformOrigin="0.126,0.494"></TextBlock>
-        <ComboBox Grid.Column="2" Margin="248,388,237,372" Style="{StaticResource CustomComboBoxStyle}" Name="TypeAddComboBox" SelectionChanged="TypeAddComboBox_SelectionChanged">
+        <TextBlock  Style="{StaticResource CustomTextBlockStyle}" Text="Add New:" Grid.Column="2" Margin="45,361,421,305" ></TextBlock>
+        <TextBlock Style="{StaticResource CustomTextBlockStyle}" Text="Type:" Grid.Column="2" Margin="158,380,272,300"></TextBlock>
+
+        <ComboBox Margin="40,21,0,0" Panel.ZIndex="100"  Name="TypeAddComboBox"  Grid.Column="2" Width="200" Height="30">
             <ComboBoxItem Content="Cable sensor"/>
             <ComboBoxItem Content="Digital pressure gauge"/>
 
@@ -193,23 +165,23 @@
             Style="{StaticResource CustomButtonStyle}"
             Content="Add"
             ToolTip="Add"
-            Click="AddButton_Click" Grid.Column="2" Margin="469,363,47,344">
+             Grid.Column="2" Margin="469,363,47,344">
 
         </Button>
 
         <Rectangle Width="600" Height="300" Fill="MediumPurple" Grid.Column="2" Margin="42,462,40,22"/>
 
-        <Label Grid.Column="2" Margin="42,465,538,266" FontSize="18" Foreground="White" FontWeight="Bold" FontFamily="Agency FB">Filter:</Label>
+        <TextBlock Grid.Column="2" Margin="42,465,538,266" Style="{StaticResource CustomTextBlockStyle}" Text="Filter:"></TextBlock>
 
         <TextBlock Style="{StaticResource CustomTextBlockStyle}" Text="ID:" Margin="62,504,573,224" Grid.Column="2"/>
-        <TextBox Style="{StaticResource CustomTextBoxStyle}" Name="IDTextBox" Margin="158,504,324,246" Grid.Column="2"/>
+        <TextBox Style="{StaticResource CustomTextBoxStyle}" Name="IDTextBox" Margin="0,280,158,10" Grid.Column="2"/>
         <Label 
         x:Name="IDErrorLabel"
         Content=""
         Foreground="Red" Margin="158,548,264,207" Grid.Column="2"/>
 
         <TextBlock Style="{StaticResource CustomTextBlockStyle}" Text="Type:" Grid.Column="2" Margin="62,584,538,158"></TextBlock>
-        <ComboBox Grid.Column="2" Style="{StaticResource CustomComboBoxStyle}" Name="TypeFilterComboBox" SelectionChanged="TypeFilterComboBox_SelectionChanged" Margin="158,583,324,172">
+        <ComboBox Margin="160,580,320,155" Grid.Column="2" Name="TypeFilterComboBox">
             <ComboBoxItem Content="Cable sensor"/>
             <ComboBoxItem Content="Digital pressure gauge"/>
         </ComboBox>
@@ -219,7 +191,7 @@
             Foreground="Red" Margin="158,623,264,132" Grid.Column="2"/>
 
         <TextBlock Style="{StaticResource CustomTextBlockStyle}" Text="Filters:" Grid.Column="2" Margin="62,658,524,74"></TextBlock>
-        <ComboBox Grid.Column="2" Style="{StaticResource CustomComboBoxStyle}" x:Name="FiltersComboBox" SelectionChanged="FiltersComboBox_SelectionChanged" Margin="158,658,324,97">
+        <ComboBox Margin="160,655,320,80" Grid.Column="2" x:Name="FiltersComboBox"  >
             <ComboBoxItem Content="Cable sensor"/>
             <ComboBoxItem Content="Digital pressure gauge"/>
         </ComboBox>
@@ -229,36 +201,36 @@
             Foreground="Red" Margin="158,693,264,62" Grid.Column="2"/>
 
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left"
-                    RenderTransformOrigin="3.796,1.67" Grid.Column="2" Margin="398,504,0,0" Width="229">
+            RenderTransformOrigin="3.796,1.67" Grid.Column="2" Margin="398,504,0,0" Width="229">
             <StackPanel Orientation="Vertical" Margin="5,0">
                 <TextBlock Text="Higher" Foreground="White" FontSize="16" HorizontalAlignment="Center"/>
-                <RadioButton Name="Higher" GroupName="Filter" Checked="Higher_Checked" HorizontalAlignment="Center"/>
+                <RadioButton Name="Higher" GroupName="Filter"  HorizontalAlignment="Center"/>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Margin="5,0">
                 <TextBlock Text="Equals" Foreground="White" FontSize="16" HorizontalAlignment="Center"/>
-                <RadioButton Name="Equals" GroupName="Filter" Checked="Equals_Checked" HorizontalAlignment="Center"/>
+                <RadioButton Name="Equals" GroupName="Filter"  HorizontalAlignment="Center"/>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Margin="5,0">
                 <TextBlock Text="Lower" Foreground="White" FontSize="16"/>
-                <RadioButton x:Name="Lower" GroupName="Filter" Checked="Lower_Checked" HorizontalAlignment="Center"/>
+                <RadioButton x:Name="Lower" GroupName="Filter" HorizontalAlignment="Center"/>
             </StackPanel>
         </StackPanel>
 
         <Button x:Name="SaveButton"
-        Style="{StaticResource CustomButtonStyle}"
-        Content="Save"
-        ToolTip="Save"
-        Click="SaveButton_Click" Grid.Column="2" Margin="432,556,47,143"></Button>
+            Style="{StaticResource CustomButtonStyle}"
+            Content="Save"
+            ToolTip="Save"
+            Grid.Column="2" Margin="432,556,47,143"></Button>
 
         <Button  x:Name="ResetButton"
-        Style="{StaticResource CustomButtonStyle}"
-        Content="Reset"
-        ToolTip="Reset"
-        Click="ResetButton_Click" Grid.Column="2" Margin="415,631,30,81">
-            
+            Style="{StaticResource CustomButtonStyle}"
+            Content="Reset"
+            ToolTip="Reset"
+            Grid.Column="2" Margin="415,631,30,81">
+
         </Button>
 
     </Grid>
-</Window>
+</UserControl>
