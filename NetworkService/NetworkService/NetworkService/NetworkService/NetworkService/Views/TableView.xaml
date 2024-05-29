@@ -146,6 +146,8 @@
           Style="{StaticResource CustomButtonStyle}"
           Content="Delete"
           ToolTip="Delete"
+          Cursor="Hand"
+          Command="{Binding DeleteCommand}"
   
           HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="2" Margin="477,297,0,0"
           />
@@ -154,9 +156,12 @@
         <TextBlock  Style="{StaticResource CustomTextBlockStyle}" Text="Add New:" Grid.Column="2" Margin="45,361,421,305" ></TextBlock>
         <TextBlock Style="{StaticResource CustomTextBlockStyle}" Text="Type:" Grid.Column="2" Margin="158,380,272,300"></TextBlock>
 
-        <ComboBox Margin="40,21,0,0" Panel.ZIndex="100"  Name="TypeAddComboBox"  Grid.Column="2" Width="200" Height="30">
-            <ComboBoxItem Content="Cable sensor"/>
-            <ComboBoxItem Content="Digital pressure gauge"/>
+        <ComboBox 
+            Margin="40,21,0,0" Panel.ZIndex="100"  Name="TypeAddComboBox"
+            Grid.Column="2" Width="200" Height="30"
+            ItemsSource="{Binding Types}"
+            SelectedItem="{Binding TypesText}">
+            
 
         </ComboBox>
 
@@ -165,7 +170,9 @@
             Style="{StaticResource CustomButtonStyle}"
             Content="Add"
             ToolTip="Add"
-             Grid.Column="2" Margin="469,363,47,344">
+             Grid.Column="2" Margin="469,363,47,344"
+            Cursor="Hand"
+            Command="{Binding AddCommand}">
 
         </Button>
 
