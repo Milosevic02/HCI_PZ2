@@ -31,12 +31,17 @@
     </Window.Resources>
     
     <Grid>
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="60" />
             <ColumnDefinition Width="684" />
             <ColumnDefinition Width="684" />
         </Grid.ColumnDefinitions>
-        
+
+        <Grid.Background>
+            <ImageBrush ImageSource="pack://application:,,,/Images/bg3.jpeg" Stretch="UniformToFill"/>
+        </Grid.Background>
+
         <Menu Grid.Column="0">
             <MenuItem
                      Name="ImagesUploadPageMenuItem2"
@@ -75,7 +80,7 @@
             </MenuItem>
         </Menu>
 
-        <Grid Grid.Column="1" Background="Gray">
+        <Grid Grid.Column="1">
             <views:DragDropView x:Name="DragDropViewModel" />
         </Grid>
 

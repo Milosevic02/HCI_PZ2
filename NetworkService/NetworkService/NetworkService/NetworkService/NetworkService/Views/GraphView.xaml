@@ -11,7 +11,8 @@
     <UserControl.DataContext>
         <viewModel:GraphViewModel />
     </UserControl.DataContext>
-    <Grid Background="MediumPurple">
+    <Grid Background="Transparent">
+        
         <Grid>
             <ComboBox Width="220" 
                   Height="30" 

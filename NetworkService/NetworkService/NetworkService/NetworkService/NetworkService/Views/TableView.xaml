@@ -65,18 +65,20 @@
         </Style>
 
     </UserControl.Resources>
-    <Grid Background="White">
+    <Grid Background="Transparent">
+        
         <DataGrid 
      x:Name="ValvesDataGrid" 
      ItemsSource="{Binding Valves}" 
      AutoGenerateColumns="False"
      CanUserAddRows="False"
+     SelectedItem="{Binding SelectedValve}"       
      ScrollViewer.CanContentScroll="False" 
      ScrollViewer.VerticalScrollBarVisibility="Auto"
      ScrollViewer.HorizontalScrollBarVisibility="Auto" Canvas.Left="119" Canvas.Top="118" Height="264" Width="602" HorizontalAlignment="Center" VerticalAlignment="Top"
       Grid.Column="2" Margin="0,28,0,0"
      >
-
+            
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader">
                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -85,41 +87,54 @@
             </DataGrid.ColumnHeaderStyle>
 
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn
-         Header="ID"
-         Binding="{Binding IsChecked}"
-         Width="65"
-         >
+                <DataGridTextColumn 
+                    Header="ID" 
+                    IsReadOnly="True"
+                    Width="*"
+                    Binding="{Binding Id}"
+>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
 
-                </DataGridCheckBoxColumn>
-
-                <DataGridTemplateColumn Header="Name" Width="*" >
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate >
-                            <TextBlock TextAlignment="Center" VerticalAlignment="Center">
-                                <TextBlock.Style>
-                                    <Style TargetType="TextBlock">
-                                        <Style.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Foreground" Value="white"/>
-
-                                            </Trigger>
-
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-
-                            </TextBlock>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-
+                <DataGridTextColumn 
+                    Header="Name" 
+                    IsReadOnly="True"
+                    Width="*"
+                    Binding="{Binding Name}"
+>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
 
 
-                <DataGridTemplateColumn Header="Type" Width="*">
+
+                <DataGridTextColumn 
+                     Header="Type" 
+                     IsReadOnly="True"
+                     Width="*"
+                     Binding="{Binding Type.Name}"
+ >
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+
+                <DataGridTemplateColumn Header="Image" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Image   Source="{Binding Image}" Width="100" Height="100"/>
+                            <Image   Source="{Binding Type.PicturePath}" Width="100" Height="100"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -128,7 +143,7 @@
          Header="Value" 
          IsReadOnly="True"
          Width="*"
-         Binding="{Binding Date}"
+         Binding="{Binding Value}"
          >
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
@@ -159,9 +174,12 @@
         <ComboBox 
             Margin="40,21,0,0" Panel.ZIndex="100"  Name="TypeAddComboBox"
             Grid.Column="2" Width="200" Height="30"
+            IsEditable="False"
+            IsTextSearchCaseSensitive="False"
+            IsTextSearchEnabled="True"
             ItemsSource="{Binding Types}"
             SelectedItem="{Binding TypesText}">
-            
+
 
         </ComboBox>
 
@@ -228,16 +246,16 @@
         <Button x:Name="SaveButton"
             Style="{StaticResource CustomButtonStyle}"
             Content="Save"
-            ToolTip="Save"
-            Grid.Column="2" Margin="432,556,47,143"></Button>
+            ToolTip="Save" Margin="422,380,57,0"/>
 
         <Button  x:Name="ResetButton"
             Style="{StaticResource CustomButtonStyle}"
             Content="Reset"
-            ToolTip="Reset"
-            Grid.Column="2" Margin="415,631,30,81">
-
-        </Button>
+            ToolTip="Reset" Margin="405,490,40,0"/>
+        <Button  x:Name="FilterButton"
+            Style="{StaticResource CustomButtonStyle}"
+            Content="Filter"
+            ToolTip="Filter" Margin="405,600,40,0"/>
 
     </Grid>
 </UserControl>

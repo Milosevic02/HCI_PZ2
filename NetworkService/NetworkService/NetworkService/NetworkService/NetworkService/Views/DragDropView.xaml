@@ -41,7 +41,8 @@
             <Setter Property="FontSize" Value="18"/>
         </Style>
     </UserControl.Resources>
-    <Grid Background="White">
+    <Grid Background="Transparent">
+        
         <Grid x:Name="SplitTo2ColumnGrid">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -74,7 +75,7 @@
 
             </TreeView>
 
-            <Grid x:Name="CanvasGrid" Grid.Column="1" Background="MediumPurple">
+            <Grid x:Name="CanvasGrid" Grid.Column="1" Background="Transparent">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
@@ -88,7 +89,7 @@
                 </Grid.RowDefinitions>
 
                 <DockPanel x:Name="DockPanel1"
-     Background="MediumPurple"
+     Background="Transparent"
      Grid.Row="0"
      Grid.Column="0"
      Margin="20,0,20,41">
@@ -129,7 +130,7 @@
                 </DockPanel>
 
                 <DockPanel x:Name="DockPanel2"
-     Background="MediumPurple"
+     Background="Transparent"
      Grid.Row="0"
      Grid.Column="1"
      Margin="20,0,20,41"
@@ -165,7 +166,7 @@
                 </DockPanel>
 
                 <DockPanel x:Name="DockPanel3"
-     Background="MediumPurple"
+     Background="Transparent"
      Grid.Row="0"
      Grid.Column="2"
      Margin="20,0,20,41">
@@ -200,7 +201,7 @@
                 </DockPanel>
 
                 <DockPanel x:Name="DockPanel4"
-     Background="MediumPurple"
+     Background="Transparent"
      Grid.Row="0"
      Grid.Column="3"
      Margin="20,0,20,41">
@@ -235,7 +236,7 @@
                 </DockPanel>
 
                 <DockPanel x:Name="DockPanel5"
-     Background="MediumPurple"
+     Background="Transparent"
      Grid.Row="1"
      Grid.Column="0"
      Margin="20,20,20,21">
@@ -270,7 +271,7 @@
                 </DockPanel>
 
                 <DockPanel x:Name="DockPanel6"
-     Background="MediumPurple"
+     Background="Transparent"
      Grid.Row="1"
      Grid.Column="1"
      Margin="20,20,20,21">
@@ -305,7 +306,7 @@
                 </DockPanel>
 
                 <DockPanel x:Name="DockPanel7"
-     Background="MediumPurple"
+     Background="Transparent"
      Grid.Row="1"
      Grid.Column="2"
      Margin="20,20,20,21">
@@ -340,7 +341,7 @@
                 </DockPanel>
 
                 <DockPanel x:Name="DockPanel8"
-     Background="MediumPurple"
+     Background="Transparent"
      Grid.Row="1"
      Grid.Column="3"
      Margin="20,20,20,21">
@@ -375,7 +376,7 @@
                 </DockPanel>
 
                 <DockPanel x:Name="DockPanel9"
-     Background="MediumPurple"
+     Background="Transparent"
      Grid.Row="2"
      Grid.Column="0"
      Margin="20,40,20,1">
@@ -409,7 +410,7 @@
                 </DockPanel>
 
                 <DockPanel x:Name="DockPanel10"
-     Background="MediumPurple"
+     Background="Transparent"
      Grid.Row="2"
      Grid.Column="1"
      Margin="20,40,20,1">
@@ -444,7 +445,7 @@
                 </DockPanel>
 
                 <DockPanel x:Name="DockPanel11"
-     Background="MediumPurple"
+     Background="Transparent"
      Grid.Row="2"
      Grid.Column="2"
      Margin="20,40,20,1">
@@ -478,7 +479,7 @@
                 </DockPanel>
 
                 <DockPanel x:Name="DockPanel12"
-     Background="MediumPurple"
+     Background="Transparent"
      Grid.Row="2"
      Grid.Column="3"
      Margin="20,40,20,1">
