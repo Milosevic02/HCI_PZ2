@@ -12,7 +12,23 @@ namespace NetworkService.ViewModel
     {
 
         private string _typeText;
+        private string _idText;
+        private string _filterTypeText;
         private Valve _selectedValve;
+
+
+        public string IdText
+        {
+            get { return _idText; }
+            set
+            {
+                if (_idText != value)
+                {
+                    _idText = value;
+                    OnPropertyChanged(nameof(IdText));
+                }
+            }
+        }
 
         public string TypesText { 
             get { return _typeText; }
@@ -22,6 +38,60 @@ namespace NetworkService.ViewModel
                 {
                     _typeText = value;
                     OnPropertyChanged(nameof(TypesText));
+                }
+            }
+        }
+        public string FilterTypeText
+        {
+            get { return _filterTypeText; }
+            set
+            {
+                if (_filterTypeText != value)
+                {
+                    _filterTypeText = value;
+                    OnPropertyChanged(nameof(FilterTypeText));
+                }
+            }
+        }
+
+        private bool _isMoreSelected;
+        public bool IsMoreSelected
+        {
+            get { return _isMoreSelected; }
+            set
+            {
+                if (_isMoreSelected != value)
+                {
+                    _isMoreSelected = value;
+                    OnPropertyChanged(nameof(IsMoreSelected));
+                }
+            }
+        }
+
+        private bool _isLessSelected;
+        public bool IsLessSelected
+        {
+            get { return _isLessSelected; }
+            set
+            {
+                if (_isLessSelected != value)
+                {
+                    _isLessSelected = value;
+                    OnPropertyChanged(nameof(IsLessSelected));
+                }
+            }
+        }
+
+        private bool _isEqualsSelected;
+        public bool IsEqualsSelected
+        {
+            get { return _isEqualsSelected; }
+            set
+            {
+                if (_isEqualsSelected != value)
+                {
+                    _isEqualsSelected = value;
+                    OnPropertyChanged(nameof(IsEqualsSelected));
                 }
             }
         }
@@ -46,11 +116,15 @@ namespace NetworkService.ViewModel
 
         public ObservableCollection<string>Types { get; set; }
         public ObservableCollection<Valve>Valves { get; set; }
+        public ObservableCollection<Valve> FilterValves { get; set; }
+
         public List<int> IDs { get; set; }
 
 
         public MyICommand AddCommand { get; set; }
         public MyICommand DeleteCommand { get; set; }
+        public MyICommand FilterCommand { get; set; }
+
 
 
         public TableViewModel()
@@ -65,6 +139,7 @@ namespace NetworkService.ViewModel
             Types = new ObservableCollection<string>() { "Cable Sensor", "Digital Manometer" };
 
             Valves = new ObservableCollection<Valve>();
+            FilterValves = new ObservableCollection<Valve>();
 
             IDs = new List<int>();
             IDs = Enumerable.Range(1, 100).ToList();
@@ -76,6 +151,7 @@ namespace NetworkService.ViewModel
             IDs.RemoveAt(49);
             IDs.RemoveAt(50);
             IDs.RemoveAt(51);
+            FilterValves = Valves;
 
         }
 
@@ -103,6 +179,11 @@ namespace NetworkService.ViewModel
         private bool CanDelete()
         {
             return SelectedValve != null;
+        }
+
+        private void OnFilter()
+        {
+
         }
 
     }
