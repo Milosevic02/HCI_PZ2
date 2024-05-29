@@ -155,13 +155,15 @@
     <Resource Include="Images\bg1.jpeg" />
     <Resource Include="Images\bg2.jpeg" />
     <Resource Include="Images\bg3.jpeg" />
-    <Resource Include="Images\bg4.jpeg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\DigitalManometer.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\CableSensor.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\bg45.jpeg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

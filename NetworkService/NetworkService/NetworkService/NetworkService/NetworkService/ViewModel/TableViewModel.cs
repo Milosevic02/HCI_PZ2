@@ -12,15 +12,34 @@ namespace NetworkService.ViewModel
     {
 
         private string _typeText;
+        private Valve _selectedValve;
 
-        public string TypeText { 
+        public string TypesText { 
             get { return _typeText; }
             set
             {
                 if(_typeText != value)
                 {
                     _typeText = value;
-                    OnPropertyChanged(nameof(TypeText));
+                    OnPropertyChanged(nameof(TypesText));
+                }
+            }
+        }
+
+        public Valve SelectedValve
+        {
+            get
+            {
+                return _selectedValve;
+            }
+
+            set
+            {
+                if (_selectedValve != value)
+                {
+                    _selectedValve = value;
+                    OnPropertyChanged(nameof(SelectedValve));
+                    DeleteCommand.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -31,11 +50,14 @@ namespace NetworkService.ViewModel
 
 
         public MyICommand AddCommand { get; set; }
+        public MyICommand DeleteCommand { get; set; }
+
 
         public TableViewModel()
         {
             LoadData();
             AddCommand = new MyICommand(OnAdd);
+            DeleteCommand = new MyICommand(OnDelete, CanDelete);
         }
 
         public void LoadData()
@@ -45,26 +67,43 @@ namespace NetworkService.ViewModel
             Valves = new ObservableCollection<Valve>();
 
             IDs = new List<int>();
-            IDs = Enumerable.Range(1, 97).ToList();
+            IDs = Enumerable.Range(1, 100).ToList();
 
             // For example, you can call the methods of Service classes from the application layer here.
-            Valves.Add(new Valve { Id = 100,Name = "Valve_1",Value = 7,Type = new EntityType(Model.Type.CableSensor) });
-            Valves.Add(new Valve { Id = 99, Name = "Valve_2", Value = 8, Type = new EntityType(Model.Type.CableSensor) });
-            Valves.Add(new Valve { Id = 98, Name = "Valve_3", Value = 9, Type = new EntityType(Model.Type.DigitalManometer) });
-            
+            Valves.Add(new Valve { Id = 50,Name = "Valve_50",Value = 7,Type = new EntityType(Model.Type.CableSensor) });
+            Valves.Add(new Valve { Id = 51, Name = "Valve_51", Value = 8, Type = new EntityType(Model.Type.CableSensor) });
+            Valves.Add(new Valve { Id = 52, Name = "Valve_52", Value = 9, Type = new EntityType(Model.Type.DigitalManometer) });
+            IDs.RemoveAt(49);
+            IDs.RemoveAt(50);
+            IDs.RemoveAt(51);
+
         }
 
         private void OnAdd()
         {
             EntityType type = new EntityType(Model.Type.CableSensor);
-            if (TypeText[0] == 'D')
+            if (TypesText[0] == 'D')
             {
                  type = new EntityType(Model.Type.DigitalManometer);
             }
             
             Valves.Add(new Valve { Id = IDs[0], Name = "Valve_" + IDs[0].ToString(), Value = 7, Type = type });
             IDs.RemoveAt(0);
-            TypeText = null;
+            TypesText = null;
         }
+
+        private void OnDelete()
+        {
+            int id = SelectedValve.Id;
+            IDs.Insert(id - 1, id);
+            Valves.Remove(SelectedValve);
+
+        }
+
+        private bool CanDelete()
+        {
+            return SelectedValve != null;
+        }
+
     }
 }
