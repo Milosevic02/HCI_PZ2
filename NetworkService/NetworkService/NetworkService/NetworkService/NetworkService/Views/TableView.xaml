@@ -220,9 +220,13 @@
             Foreground="Red" Margin="158,623,264,132" Grid.Column="2"/>
 
         <TextBlock Style="{StaticResource CustomTextBlockStyle}" Text="Filters:" Grid.Column="2" Margin="62,658,524,74"></TextBlock>
-        <ComboBox Margin="160,655,320,80" Grid.Column="2" x:Name="FiltersComboBox"  >
-            <ComboBoxItem Content="Cable sensor"/>
-            <ComboBoxItem Content="Digital pressure gauge"/>
+        <ComboBox Margin="160,655,320,80" Grid.Column="2" x:Name="FiltersComboBox"
+                  IsEditable="False"
+                  IsTextSearchCaseSensitive="False"
+                    IsTextSearchEnabled="True"
+                    ItemsSource="{Binding FilterNames}"
+                    SelectedItem="{Binding SelectedFilterText}">
+            
         </ComboBox>
         <Label 
             x:Name="IDErrorLabel_Copy"
@@ -257,6 +261,7 @@
         <Button  x:Name="SaveButton"
             Style="{StaticResource CustomButtonStyle}"
             Content="Save"
+            Command="{Binding SaveCommand}"
             ToolTip="Save" Margin="405,490,40,0"/>
         <Button  x:Name="ResetButton"
             Style="{StaticResource CustomButtonStyle}"
