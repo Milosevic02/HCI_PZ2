@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace NetworkService.ViewModel
 {
@@ -160,6 +161,9 @@ namespace NetworkService.ViewModel
         public MyICommand FilterCommand { get; set; }
         public MyICommand ResetCommand { get; set; }
         public MyICommand SaveCommand { get; set; }
+        public MyICommand ComboBoxSelectionChangedCommand { get; private set; }
+
+        
 
         public TableViewModel()
         {
@@ -177,6 +181,8 @@ namespace NetworkService.ViewModel
             Filter f1 = new Filter();
             Filters = new Dictionary<string, Filter>();
             FilterNames = new ObservableCollection<string>();
+
+            ComboBoxSelectionChangedCommand = new MyICommand(OnComboBoxSelectionChanged);
 
             Valves = new ObservableCollection<Valve>();
             IDs = new List<int>();
@@ -286,6 +292,7 @@ namespace NetworkService.ViewModel
             IsLessSelected = false;
             IsMoreSelected = false;
             FilterTypeText = null;
+            SelectedFilterText = null;
         }
         private void OnReset()
         {
@@ -305,8 +312,46 @@ namespace NetworkService.ViewModel
                 
                 Filters[filter.GetName()] = filter;
                 FilterNames.Add(filter.GetName());
+                SelectedFilterText = filter.GetName();
             }
         }
+
+        private void OnComboBoxSelectionChanged()
+        {
+            if(SelectedFilterText != null)
+            {
+                Filter filter = Filters[SelectedFilterText];
+                IdText = filter.Id.ToString();
+                IsMoreSelected = false;
+                IsLessSelected = false;
+                IsEqualsSelected = false;
+                switch (filter.Operation)
+                {
+                    case "More":
+                        IsMoreSelected = true;
+                        break;
+                    case "Less":
+                        IsLessSelected = true;
+                        break;
+                    case "Equals":
+                        IsEqualsSelected = true;
+                        break;
+
+                }
+
+                if (filter.Type.Name == Model.Type.DigitalManometer)
+                {
+                    FilterTypeText = "Digital Manometer";
+                }
+                else
+                {
+                    FilterTypeText = "Cable Sensor";
+                }
+            }
+            
+        }
+
+
 
     }
 }
