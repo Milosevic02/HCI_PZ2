@@ -95,7 +95,19 @@ namespace NetworkService.ViewModel
                 }
             }
         }
-
+        private string _selectedFilterText;
+        public string SelectedFilterText
+        {
+            get { return _selectedFilterText; }
+            set
+            {
+                if (_selectedFilterText != value)
+                {
+                    _selectedFilterText = value;
+                    OnPropertyChanged(nameof(SelectedFilterText));
+                }
+            }
+        }
         public Valve SelectedValve
         {
             get
@@ -113,6 +125,7 @@ namespace NetworkService.ViewModel
                 }
             }
         }
+
 
         private Filter _tempFilter;
         public Filter TempFilter
@@ -134,6 +147,10 @@ namespace NetworkService.ViewModel
         public ObservableCollection<string>Types { get; set; }
         public ObservableCollection<Valve>Valves { get; set; }
         public ObservableCollection<Valve> FilterValves { get; set; }
+        public Dictionary<string,Filter>Filters { get; set; }
+        public ObservableCollection<string> FilterNames { get; set; }
+
+
 
         public List<int> IDs { get; set; }
 
@@ -142,9 +159,7 @@ namespace NetworkService.ViewModel
         public MyICommand DeleteCommand { get; set; }
         public MyICommand FilterCommand { get; set; }
         public MyICommand ResetCommand { get; set; }
-
-
-
+        public MyICommand SaveCommand { get; set; }
 
         public TableViewModel()
         {
@@ -153,17 +168,20 @@ namespace NetworkService.ViewModel
             DeleteCommand = new MyICommand(OnDelete, CanDelete);
             FilterCommand = new MyICommand(OnFilter);
             ResetCommand = new MyICommand(OnReset);
+            SaveCommand = new MyICommand(OnSave);
         }
 
         public void LoadData()
         {
             Types = new ObservableCollection<string>() { "Cable Sensor", "Digital Manometer" };
+            Filter f1 = new Filter();
+            Filters = new Dictionary<string, Filter>();
+            FilterNames = new ObservableCollection<string>();
 
             Valves = new ObservableCollection<Valve>();
             IDs = new List<int>();
             IDs = Enumerable.Range(1, 100).ToList();
 
-            // For example, you can call the methods of Service classes from the application layer here.
             Valves.Add(new Valve { Id = 50,Name = "Valve_50",Value = 7,Type = new EntityType(Model.Type.CableSensor) });
             Valves.Add(new Valve { Id = 51, Name = "Valve_51", Value = 8, Type = new EntityType(Model.Type.CableSensor) });
             Valves.Add(new Valve { Id = 52, Name = "Valve_52", Value = 9, Type = new EntityType(Model.Type.DigitalManometer) });
@@ -214,37 +232,7 @@ namespace NetworkService.ViewModel
 
         private void OnFilter()
         {
-            string operation = String.Empty;
-            int id = 0;
-            Filter filter = new Filter();
-            
-            if (IdText != null)
-            {
-                id = Int32.Parse(IdText);
-                filter.Id = id;
-                if(IsMoreSelected)
-                {
-                    operation = "More";
-                }else if(IsLessSelected)
-                {
-                    operation = "Less";
-                }else if(IsEqualsSelected)
-                {
-                    operation = "Equals";
-                }
-                filter.Operation = operation;
-            }
-            if(FilterTypeText != null)
-            {
-                EntityType type = new EntityType(Model.Type.CableSensor);
-                if (FilterTypeText[0] == 'D')
-                {
-                    type = new EntityType(Model.Type.DigitalManometer);
-                }
-                filter.Type = type;
-                
-            }
-
+            Filter filter = CollectFilterInfo();
             TempFilter = filter;
             FilterValves.Clear();
             foreach(Valve v in Valves)
@@ -255,18 +243,68 @@ namespace NetworkService.ViewModel
                 }
             }
         }
+        private Filter CollectFilterInfo()
+        {
+            string operation = String.Empty;
+            Filter filter = new Filter();
 
-        private void OnReset()
+            if (IdText != null)
+            {
+                int id = Int32.Parse(IdText);
+                filter.Id = id;
+                if (IsMoreSelected)
+                {
+                    operation = "More";
+                }
+                else if (IsLessSelected)
+                {
+                    operation = "Less";
+                }
+                else if (IsEqualsSelected)
+                {
+                    operation = "Equals";
+                }
+                filter.Operation = operation;
+            }
+            if (FilterTypeText != null)
+            {
+                EntityType type = new EntityType(Model.Type.CableSensor);
+                if (FilterTypeText[0] == 'D')
+                {
+                    type = new EntityType(Model.Type.DigitalManometer);
+                }
+                filter.Type = type;
+
+            }
+            return filter;
+        }
+
+        private void ResetFilterForm()
         {
             IdText = null;
             IsEqualsSelected = false;
             IsLessSelected = false;
             IsMoreSelected = false;
             FilterTypeText = null;
+        }
+        private void OnReset()
+        {
+            ResetFilterForm();
             FilterValves.Clear();
             foreach(Valve v in Valves)
             {
                 FilterValves.Add(v);
+            }
+        }
+
+        private void OnSave()
+        {
+            
+            Filter filter = CollectFilterInfo();
+            if (!(Filters.ContainsKey(filter.GetName()))){
+                
+                Filters[filter.GetName()] = filter;
+                FilterNames.Add(filter.GetName());
             }
         }
 
