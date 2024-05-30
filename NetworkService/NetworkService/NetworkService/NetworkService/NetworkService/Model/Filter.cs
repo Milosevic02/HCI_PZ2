@@ -49,5 +49,46 @@ namespace NetworkService.Model
             return retVal;
         }
 
+        public string GetName()
+        {
+            string retVal = "";
+            if (Operation != String.Empty)
+            {
+                string id = Id.ToString();
+                switch (Operation)
+                {
+                    case "More":
+                        retVal += "More then " + id + " ";
+                        break;
+                    case "Less":
+                        retVal += "Less then " + id + " ";
+                        break;
+                    case "Equals":
+                        retVal += "Equals with  " + id + " ";
+                        break;
+                    default:
+                        retVal = "Error";
+                        break;
+                }
+            }
+
+            if (Type != null)
+            {
+                if(Type.Name == Model.Type.DigitalManometer)
+                {
+                    retVal += "Type:DM";
+                }
+                else
+                {
+                    retVal += "Type:CS";
+                }
+
+
+            }
+
+            return retVal;
+
+        }
+
     }
 }
