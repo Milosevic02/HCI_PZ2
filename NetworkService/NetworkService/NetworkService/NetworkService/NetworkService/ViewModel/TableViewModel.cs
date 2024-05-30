@@ -183,6 +183,38 @@ namespace NetworkService.ViewModel
 
         private void OnFilter()
         {
+            string operation = String.Empty;
+            int id = 0;
+            Filter filter = new Filter();
+            
+            if (IdText != null)
+            {
+                id = Int32.Parse(IdText);
+                filter.Id = id;
+                if(IsMoreSelected)
+                {
+                    operation = "More";
+                }else if(IsLessSelected)
+                {
+                    operation = "Less";
+                }else if(IsEqualsSelected)
+                {
+                    operation = "Equals";
+                }
+                filter.Operation = operation;
+            }
+            if(FilterTypeText != null)
+            {
+                EntityType type = new EntityType(Model.Type.CableSensor);
+                if (TypesText[0] == 'D')
+                {
+                    type = new EntityType(Model.Type.DigitalManometer);
+                }
+                filter.Type = type;
+                
+            }
+
+            
 
         }
 

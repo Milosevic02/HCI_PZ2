@@ -83,6 +83,7 @@
     <Compile Include="Helpers\ValidationBase.cs" />
     <Compile Include="Helpers\ValidationErrors.cs" />
     <Compile Include="Model\EntityType.cs" />
+    <Compile Include="Model\Filter.cs" />
     <Compile Include="Model\Valve.cs" />
     <Compile Include="Helpers\MyICommand.cs" />
     <Compile Include="Helpers\MyICommandWithParameter.cs" />
