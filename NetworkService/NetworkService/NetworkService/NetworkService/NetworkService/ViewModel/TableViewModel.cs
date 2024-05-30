@@ -256,7 +256,19 @@ namespace NetworkService.ViewModel
             }
         }
 
-
+        private void OnReset()
+        {
+            IdText = null;
+            IsEqualsSelected = false;
+            IsLessSelected = false;
+            IsMoreSelected = false;
+            FilterTypeText = null;
+            FilterValves.Clear();
+            foreach(Valve v in Valves)
+            {
+                FilterValves.Add(v);
+            }
+        }
 
     }
 }
