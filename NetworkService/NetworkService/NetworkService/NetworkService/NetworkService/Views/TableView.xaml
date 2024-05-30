@@ -6,6 +6,8 @@
              xmlns:local="clr-namespace:NetworkService.Views"
              xmlns:viewModel="clr-namespace:NetworkService.ViewModel" 
              xmlns:views="clr-namespace:NetworkService.Views"
+                xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+
              mc:Ignorable="d" 
              d:DesignHeight="806" d:DesignWidth="684">
     <UserControl.DataContext>
@@ -225,8 +227,14 @@
                   IsTextSearchCaseSensitive="False"
                     IsTextSearchEnabled="True"
                     ItemsSource="{Binding FilterNames}"
-                    SelectedItem="{Binding SelectedFilterText}">
-            
+                    SelectedItem="{Binding SelectedFilterText}"
+                    >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding ComboBoxSelectionChangedCommand}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+
         </ComboBox>
         <Label 
             x:Name="IDErrorLabel_Copy"
