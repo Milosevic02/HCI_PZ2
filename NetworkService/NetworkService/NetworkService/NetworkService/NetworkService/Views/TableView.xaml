@@ -257,7 +257,7 @@
         <Button  x:Name="SaveButton"
             Style="{StaticResource CustomButtonStyle}"
             Content="Save"
-            ToolTip="Save" Margin="405,490,40,0" Click="SaveButton_Click"/>
+            ToolTip="Save" Margin="405,490,40,0"/>
         <Button  x:Name="ResetButton"
             Style="{StaticResource CustomButtonStyle}"
             Content="Reset"
