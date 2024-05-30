@@ -114,6 +114,23 @@ namespace NetworkService.ViewModel
             }
         }
 
+        private Filter _tempFilter;
+        public Filter TempFilter
+        {
+            get
+            {
+                return _tempFilter;
+            }
+            set
+            {
+                if (_tempFilter != value)
+                {
+                    _tempFilter = value;
+                    OnPropertyChanged(nameof(TempFilter));
+                }
+            }
+        }
+
         public ObservableCollection<string>Types { get; set; }
         public ObservableCollection<Valve>Valves { get; set; }
         public ObservableCollection<Valve> FilterValves { get; set; }
@@ -124,6 +141,8 @@ namespace NetworkService.ViewModel
         public MyICommand AddCommand { get; set; }
         public MyICommand DeleteCommand { get; set; }
         public MyICommand FilterCommand { get; set; }
+        public MyICommand ResetCommand { get; set; }
+
 
 
 
@@ -132,6 +151,8 @@ namespace NetworkService.ViewModel
             LoadData();
             AddCommand = new MyICommand(OnAdd);
             DeleteCommand = new MyICommand(OnDelete, CanDelete);
+            FilterCommand = new MyICommand(OnFilter);
+            ResetCommand = new MyICommand(OnReset);
         }
 
         public void LoadData()
@@ -139,8 +160,6 @@ namespace NetworkService.ViewModel
             Types = new ObservableCollection<string>() { "Cable Sensor", "Digital Manometer" };
 
             Valves = new ObservableCollection<Valve>();
-            FilterValves = new ObservableCollection<Valve>();
-
             IDs = new List<int>();
             IDs = Enumerable.Range(1, 100).ToList();
 
@@ -151,7 +170,7 @@ namespace NetworkService.ViewModel
             IDs.RemoveAt(49);
             IDs.RemoveAt(50);
             IDs.RemoveAt(51);
-            FilterValves = Valves;
+            FilterValves = new ObservableCollection<Valve>(Valves);
 
         }
 
@@ -162,8 +181,19 @@ namespace NetworkService.ViewModel
             {
                  type = new EntityType(Model.Type.DigitalManometer);
             }
-            
-            Valves.Add(new Valve { Id = IDs[0], Name = "Valve_" + IDs[0].ToString(), Value = 7, Type = type });
+            Valve valve = new Valve { Id = IDs[0], Name = "Valve_" + IDs[0].ToString(), Value = 7, Type = type };
+            Valves.Add(valve);
+            if (TempFilter != null)
+            {
+                if (TempFilter.FilterEntity(valve))
+                {
+                    FilterValves.Add(valve);    
+                }
+            }
+            else
+            {
+                FilterValves.Add(valve);
+            }
             IDs.RemoveAt(0);
             TypesText = null;
         }
@@ -173,6 +203,7 @@ namespace NetworkService.ViewModel
             int id = SelectedValve.Id;
             IDs.Insert(id - 1, id);
             Valves.Remove(SelectedValve);
+            FilterValves.Remove(SelectedValve);
 
         }
 
@@ -206,7 +237,7 @@ namespace NetworkService.ViewModel
             if(FilterTypeText != null)
             {
                 EntityType type = new EntityType(Model.Type.CableSensor);
-                if (TypesText[0] == 'D')
+                if (FilterTypeText[0] == 'D')
                 {
                     type = new EntityType(Model.Type.DigitalManometer);
                 }
@@ -214,9 +245,18 @@ namespace NetworkService.ViewModel
                 
             }
 
-            
-
+            TempFilter = filter;
+            FilterValves.Clear();
+            foreach(Valve v in Valves)
+            {
+                if(filter.FilterEntity(v))
+                {
+                    FilterValves.Add(v);
+                }
+            }
         }
+
+
 
     }
 }

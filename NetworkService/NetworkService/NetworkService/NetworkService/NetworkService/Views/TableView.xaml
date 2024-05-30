@@ -69,7 +69,7 @@
         
         <DataGrid 
      x:Name="ValvesDataGrid" 
-     ItemsSource="{Binding Valves}" 
+     ItemsSource="{Binding FilterValves}" 
      AutoGenerateColumns="False"
      CanUserAddRows="False"
      SelectedItem="{Binding SelectedValve}"       
@@ -261,6 +261,7 @@
         <Button  x:Name="ResetButton"
             Style="{StaticResource CustomButtonStyle}"
             Content="Reset"
+            Command="{Binding ResetCommand}"
             ToolTip="Reset" Margin="405,600,40,0"/>
 
     </Grid>
