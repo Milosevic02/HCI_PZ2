@@ -9,6 +9,7 @@ using System.Windows.Input;
 using MVVMLight.Messaging;
 using System.Windows;
 using System.Diagnostics;
+using System.IO;
 
 namespace NetworkService.ViewModel
 {
@@ -202,9 +203,29 @@ namespace NetworkService.ViewModel
 
         }
 
-        private void WriteValueToEntity(string value)
+        private void WriteValueToEntity(string received)
         {
-            MessageBox.Show(value);
+            string[] pom = received.Split('_',':');
+            int row = Int32.Parse(pom[1]);
+            int value = Int32.Parse(pom[2]);
+            bool valid = value >= 5 && value <= 16;
+            int id = Valves[row].Id;
+            string retVal = id.ToString() + ";" + pom[2] + ";" + valid.ToString() + ";" + DateTime.Now;
+            string path = "SimulatorValue.txt";
+            if(valid)
+                Valves[row].Value = value;
+                
+            if (!File.Exists(path))
+            {
+                MessageBox.Show("File does not exsits ");
+            }
+            else
+            {
+                using (StreamWriter sw = new StreamWriter(path,true))
+                {
+                    sw.WriteLine(retVal);
+                }
+            }
         }
 
         private void OnAdd()
