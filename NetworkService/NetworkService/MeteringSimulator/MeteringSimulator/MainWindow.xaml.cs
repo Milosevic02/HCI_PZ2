@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -32,6 +33,8 @@ namespace MeteringSimulator
             InitializeComponent();
 
             ProjectTopics.ItemsSource = new List<string>() { "T1", "T2", "T3", "T4", "T5", "T6", "T7" };
+
+            ProjectTopics.SelectedValue = "T1";
 
             RestartButton.IsEnabled = false;
         }
@@ -174,5 +177,7 @@ namespace MeteringSimulator
         {
             this.DragMove();
         }
+
+
     }
 }
