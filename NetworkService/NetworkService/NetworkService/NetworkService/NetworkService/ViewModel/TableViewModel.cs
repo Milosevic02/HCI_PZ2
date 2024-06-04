@@ -6,6 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using MVVMLight.Messaging;
+using System.Windows;
+using System.Diagnostics;
 
 namespace NetworkService.ViewModel
 {
@@ -173,6 +176,7 @@ namespace NetworkService.ViewModel
             FilterCommand = new MyICommand(OnFilter);
             ResetCommand = new MyICommand(OnReset);
             SaveCommand = new MyICommand(OnSave);
+            Messenger.Default.Register<string>(this, "ValueFromSimulator", WriteValueToEntity);
         }
 
         public void LoadData()
@@ -198,6 +202,11 @@ namespace NetworkService.ViewModel
 
         }
 
+        private void WriteValueToEntity(string value)
+        {
+            MessageBox.Show(value);
+        }
+
         private void OnAdd()
         {
             EntityType type = new EntityType(Model.Type.CableSensor);
@@ -220,6 +229,10 @@ namespace NetworkService.ViewModel
             }
             IDs.RemoveAt(0);
             TypesText = null;
+            Messenger.Default.Send<int>(Valves.Count(), "Count");
+            RestartOtherApplication("C:\\Users\\milos\\Documents\\Faculty\\6. Semestar\\HCI\\HCI_PZ2\\NetworkService\\NetworkService\\MeteringSimulator\\MeteringSimulator\\bin\\Debug\\MeteringSimulator.exe");
+
+
         }
 
         private void OnDelete()
@@ -228,6 +241,9 @@ namespace NetworkService.ViewModel
             IDs.Insert(id - 1, id);
             Valves.Remove(SelectedValve);
             FilterValves.Remove(SelectedValve);
+            Messenger.Default.Send<int>(Valves.Count(), "Count");
+            RestartOtherApplication("C:\\Users\\milos\\Documents\\Faculty\\6. Semestar\\HCI\\HCI_PZ2\\NetworkService\\NetworkService\\MeteringSimulator\\MeteringSimulator\\bin\\Debug\\MeteringSimulator.exe");
+
 
         }
 
@@ -349,6 +365,18 @@ namespace NetworkService.ViewModel
                 }
             }
             
+        }
+        public void RestartOtherApplication(string otherAppExecutablePath)
+        {
+            // Pronađi sve instance druge aplikacije i ugasi ih
+            foreach (var process in Process.GetProcessesByName("MeteringSimulator")) // Zameni sa stvarnim imenom aplikacije bez ekstenzije
+            {
+                process.Kill();
+                process.WaitForExit();
+            }
+
+            // Pokreni novu instancu aplikacije
+            Process.Start(otherAppExecutablePath);
         }
 
 
