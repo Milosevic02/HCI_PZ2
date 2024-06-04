@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace NetworkService.Model
 {
@@ -19,7 +20,15 @@ namespace NetworkService.Model
         public EntityType(Type name)
         {
             Name = name;
-            PicturePath = "Images/" + name.ToString() + ".jpg";
+            if(name == Type.CableSensor)
+            {
+                PicturePath = "C:\\Users\\milos\\Documents\\Faculty\\6. Semestar\\HCI\\HCI_PZ2\\NetworkService\\NetworkService\\NetworkService\\NetworkService\\NetworkService\\Images\\CableSensor.jpg";
+
+            }
+            else
+            {
+                PicturePath = "C:\\Users\\milos\\Documents\\Faculty\\6. Semestar\\HCI\\HCI_PZ2\\NetworkService\\NetworkService\\NetworkService\\NetworkService\\NetworkService\\Images\\DigitalManometer.jpg";
+            }
         }
 
     }
