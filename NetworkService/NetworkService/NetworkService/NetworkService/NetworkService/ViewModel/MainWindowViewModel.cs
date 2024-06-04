@@ -12,12 +12,13 @@ using System.Windows.Input;
 using NetworkService;
 using System.Windows;
 using System.Diagnostics;
+using MVVMLight.Messaging;
 
 namespace NetworkService.ViewModel
 {
     public class MainWindowViewModel : BindableBase
     {
-        private int count = 15; // Inicijalna vrednost broja objekata u sistemu
+        private int count = 3; // Inicijalna vrednost broja objekata u sistemu
                                 // ######### ZAMENITI stvarnim brojem elemenata
                                 //           zavisno od broja entiteta u listi
         public GraphView g;
@@ -69,10 +70,18 @@ namespace NetworkService.ViewModel
         {
             g = new GraphView();
             t = new TableView();
+            Messenger.Default.Register<int>(this, "Count", UpdateCount);
+
             CurrentView = t;
             MyButtonClickCommand = new MyICommandWithParameter<string>(MyButtonClick);
             CloseWindowCommand = new MyICommand<Window>(CloseWindow);
             createListener(); //Povezivanje sa serverskom aplikacijom
+
+        }
+
+        private void UpdateCount(int c)
+        {
+            count = c;
         }
 
         private void createListener()
@@ -110,6 +119,7 @@ namespace NetworkService.ViewModel
                         {
                             //U suprotnom, server je poslao promenu stanja nekog objekta u sistemu
                             Console.WriteLine(incomming); //Na primer: "Entitet_1:272"
+                            Messenger.Default.Send<string>(incomming, "ValueFromSimulator");
 
                             //################ IMPLEMENTACIJA ####################
                             // Obraditi poruku kako bi se dobile informacije o izmeni
