@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:NetworkService.Views"
              xmlns:viewModel="clr-namespace:NetworkService.ViewModel" 
              xmlns:views="clr-namespace:NetworkService.Views"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="806" d:DesignWidth="684">
     <UserControl.DataContext>
@@ -16,15 +17,19 @@
         <Grid>
             <ComboBox Width="220" 
                   Height="30" 
-                  x:Name="ComboBox1"
+                  x:Name="GraphComboBox"
                   VerticalAlignment="Top" 
                   HorizontalAlignment="Left" 
                   Margin="232,120,0,0" 
                   Cursor="Hand"
-                  ToolTip="Select entity"
-                  SelectedItem="{Binding SelectedEntity}" 
-                  ItemsSource="{Binding EntitiesComboBox}"
+                  ToolTip="Select valve"
+                      IsEditable="False"
+                    IsTextSearchCaseSensitive="False"
+                    IsTextSearchEnabled="True"
+                  SelectedItem="{Binding SelectedValveText}" 
+                  ItemsSource="{Binding GraphValves}"
                   >
+               
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock 
@@ -34,17 +39,12 @@
                                FontSize="15" />
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
-                <!--
-                <i:Interaction.Triggers
-                    <i:EventTrigger EventName="SelectionChanged"
-                        <i:InvokeCommandAction Command="{Binding ComboBoxSelectionChangedCommand}" /
-                    /i:EventTrigger
-                /i:Interaction.Triggers
-                
-                Ovde sam ti ostavio trigger za menjanje u comboBox-u
-                Samo im vrati "<" i ">" tamo gde treba
-                obrisao sam ih da moze komentar da se napise
-                -->
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding ComboBoxSelectionChangedCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+
             </ComboBox>
 
             <Label Width="60" Height="40" Margin="0,0,630,400" Content="Value" FontSize="20" Focusable="False" Panel.ZIndex="10"/>
