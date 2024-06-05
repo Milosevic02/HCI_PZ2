@@ -148,9 +148,7 @@ namespace NetworkService.ViewModel
                 }
             }
         }
-
         public ObservableCollection<string>Types { get; set; }
-        public ObservableCollection<Valve>Valves { get; set; }
         public ObservableCollection<Valve> FilterValves { get; set; }
         public Dictionary<string,Filter>Filters { get; set; }
         public ObservableCollection<string> FilterNames { get; set; }
@@ -189,17 +187,13 @@ namespace NetworkService.ViewModel
 
             ComboBoxSelectionChangedCommand = new MyICommand(OnComboBoxSelectionChanged);
 
-            Valves = new ObservableCollection<Valve>();
             IDs = new List<int>();
             IDs = Enumerable.Range(1, 100).ToList();
-
-            Valves.Add(new Valve { Id = 50,Name = "Valve_50",Value = 7,Type = new EntityType(Model.Type.CableSensor) });
-            Valves.Add(new Valve { Id = 51, Name = "Valve_51", Value = 8, Type = new EntityType(Model.Type.CableSensor) });
-            Valves.Add(new Valve { Id = 52, Name = "Valve_52", Value = 9, Type = new EntityType(Model.Type.DigitalManometer) });
             IDs.RemoveAt(49);
             IDs.RemoveAt(50);
             IDs.RemoveAt(51);
-            FilterValves = new ObservableCollection<Valve>(Valves);
+            FilterValves = new ObservableCollection<Valve>(MainWindowViewModel.Valves);
+
 
         }
 
@@ -209,11 +203,11 @@ namespace NetworkService.ViewModel
             int row = Int32.Parse(pom[1]);
             int value = Int32.Parse(pom[2]);
             bool valid = value >= 5 && value <= 16;
-            int id = Valves[row].Id;
+            int id = MainWindowViewModel.Valves[row].Id;
             string retVal = id.ToString() + ";" + pom[2] + ";" + valid.ToString() + ";" + DateTime.Now;
             string path = "SimulatorValue.txt";
             if(valid)
-                Valves[row].Value = value;
+                MainWindowViewModel.Valves[row].Value = value;
                 
             if (!File.Exists(path))
             {
@@ -236,7 +230,7 @@ namespace NetworkService.ViewModel
                  type = new EntityType(Model.Type.DigitalManometer);
             }
             Valve valve = new Valve { Id = IDs[0], Name = "Valve_" + IDs[0].ToString(), Value = 7, Type = type };
-            Valves.Add(valve);
+            MainWindowViewModel.Valves.Add(valve);
             if (TempFilter != null)
             {
                 if (TempFilter.FilterEntity(valve))
@@ -250,7 +244,7 @@ namespace NetworkService.ViewModel
             }
             IDs.RemoveAt(0);
             TypesText = null;
-            Messenger.Default.Send<int>(Valves.Count(), "Count");
+            Messenger.Default.Send<int>(MainWindowViewModel.Valves.Count(), "Count");
             RestartOtherApplication("C:\\Users\\milos\\Documents\\Faculty\\6. Semestar\\HCI\\HCI_PZ2\\NetworkService\\NetworkService\\MeteringSimulator\\MeteringSimulator\\bin\\Debug\\MeteringSimulator.exe");
 
 
@@ -260,9 +254,9 @@ namespace NetworkService.ViewModel
         {
             int id = SelectedValve.Id;
             IDs.Insert(id - 1, id);
-            Valves.Remove(SelectedValve);
+            MainWindowViewModel.Valves.Remove(SelectedValve);
             FilterValves.Remove(SelectedValve);
-            Messenger.Default.Send<int>(Valves.Count(), "Count");
+            Messenger.Default.Send<int>(MainWindowViewModel.Valves.Count(), "Count");
             RestartOtherApplication("C:\\Users\\milos\\Documents\\Faculty\\6. Semestar\\HCI\\HCI_PZ2\\NetworkService\\NetworkService\\MeteringSimulator\\MeteringSimulator\\bin\\Debug\\MeteringSimulator.exe");
 
 
@@ -278,7 +272,7 @@ namespace NetworkService.ViewModel
             Filter filter = CollectFilterInfo();
             TempFilter = filter;
             FilterValves.Clear();
-            foreach(Valve v in Valves)
+            foreach(Valve v in MainWindowViewModel.Valves)
             {
                 if(filter.FilterEntity(v))
                 {
@@ -335,7 +329,7 @@ namespace NetworkService.ViewModel
         {
             ResetFilterForm();
             FilterValves.Clear();
-            foreach(Valve v in Valves)
+            foreach(Valve v in MainWindowViewModel.Valves)
             {
                 FilterValves.Add(v);
             }
