@@ -1,0 +1,5 @@
+- Stavi ToastNotification
+-Provera dal su polja popunjena
+- Sredi pozadinu
+- Na zatvaranje programa ocisti fajl za simulator
+- Nece da posalje sve Valve sa Table na Graph

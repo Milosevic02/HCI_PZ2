@@ -33,6 +33,10 @@ namespace NetworkService.ViewModel
                 return new ObservableCollection<string>(Valves.Select(v => v.Name));
             } }
 
+        public NetworkDisplay networkDisplay;
+        public MainWindow window;
+
+
 
         private void MyButtonClick(string viewModelName)
         {
@@ -165,6 +169,30 @@ namespace NetworkService.ViewModel
             while (lines.Count > 0)
             {
                 yield return lines.Pop();
+            }
+        }
+
+        public void UpdateCanvasValue(int id)
+        {
+            foreach (var tmp in NetworkDisplayViewModel.IDCanvasCollection)
+            {
+                int canvasId = t.GetCanvasIndexForEntityId(id);
+                if (tmp.Equals(canvasId.ToString()))
+                {
+                    try
+                    {
+                        NetworkDisplayViewModel.ValueCanvasCollection[canvasId] = MainWindowViewModel.Valves[id].Value.ToString();
+                        if (MainWindowViewModel.Valves[id].Value > 0.34 && MainWindowViewModel.Valves[id].Value < 2.73)
+                        {
+
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                    catch (Exception ex) { }
+                }
             }
         }
     }

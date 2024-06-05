@@ -131,6 +131,20 @@ namespace NetworkService.ViewModel
             }
         }
 
+        public int GetCanvasIndexForEntityId(int entityId)
+        {
+            for (int i = 0; i < _networkDisplay._networkDisplayViewModel.CanvasCollection.Count; i++)
+            {
+                Entity entity = (_networkDisplay._networkDisplayViewModel.CanvasCollection[i].Resources["data"]) as Entity;
+
+                if ((entity != null) && (entity.Id == entityId))
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
 
         private Filter _tempFilter;
         public Filter TempFilter

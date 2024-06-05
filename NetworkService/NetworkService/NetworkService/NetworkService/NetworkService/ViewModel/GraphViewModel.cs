@@ -37,6 +37,7 @@ namespace NetworkService.ViewModel
         public ObservableCollection<DataPoint> DataPoints { get; set; }
 
         
+        
        
 
         public GraphViewModel() {
