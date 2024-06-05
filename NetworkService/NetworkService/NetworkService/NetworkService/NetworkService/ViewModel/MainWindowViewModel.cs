@@ -13,6 +13,9 @@ using NetworkService;
 using System.Windows;
 using System.Diagnostics;
 using MVVMLight.Messaging;
+using NetworkService.Model;
+using System.Collections.ObjectModel;
+using System.IO;
 
 namespace NetworkService.ViewModel
 {
@@ -25,12 +28,19 @@ namespace NetworkService.ViewModel
         public TableView t;
 
         public ICommand MyButtonClickCommand { get; private set; }
+        public static ObservableCollection<Valve> Valves { get; set; }
+        public static ObservableCollection<string> ValveNames { get {
+                return new ObservableCollection<string>(Valves.Select(v => v.Name));
+            } }
+
+
         private void MyButtonClick(string viewModelName)
         {
 
             switch (viewModelName)
             {
                 case "GraphViewModel":
+                    //ValveNames = new ObservableCollection<string>(Valves.Select(v => v.Name));
                     CurrentView = g;
                     break;
                 case "TableViewModel":
@@ -68,10 +78,14 @@ namespace NetworkService.ViewModel
 
         public MainWindowViewModel()
         {
+            
+            Messenger.Default.Register<int>(this, "Count", UpdateCount);
+            Valves = new ObservableCollection<Valve>();
+            Valves.Add(new Valve { Id = 50, Name = "Valve_50", Value = 7, Type = new EntityType(Model.Type.CableSensor) });
+            Valves.Add(new Valve { Id = 51, Name = "Valve_51", Value = 8, Type = new EntityType(Model.Type.CableSensor) });
+            Valves.Add(new Valve { Id = 52, Name = "Valve_52", Value = 9, Type = new EntityType(Model.Type.DigitalManometer) });
             g = new GraphView();
             t = new TableView();
-            Messenger.Default.Register<int>(this, "Count", UpdateCount);
-
             CurrentView = t;
             MyButtonClickCommand = new MyICommandWithParameter<string>(MyButtonClick);
             CloseWindowCommand = new MyICommand<Window>(CloseWindow);
@@ -132,6 +146,26 @@ namespace NetworkService.ViewModel
 
             listeningThread.IsBackground = true;
             listeningThread.Start();
+        }
+
+        public static IEnumerable<string> ReadDataBackwards(string filePath)
+        {
+            Stack<string> lines = new Stack<string>();
+
+            using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (StreamReader reader = new StreamReader(fs))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    lines.Push(line);
+                }
+            }
+
+            while (lines.Count > 0)
+            {
+                yield return lines.Pop();
+            }
         }
     }
 }
