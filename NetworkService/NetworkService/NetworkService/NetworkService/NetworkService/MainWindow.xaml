@@ -1,0 +1,91 @@
+﻿<Window x:Class="NetworkService.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NetworkService"
+        xmlns:viewModel="clr-namespace:NetworkService.ViewModel" 
+        xmlns:views="clr-namespace:NetworkService.Views"
+        ResizeMode="NoResize"
+        Name="MainWindowName"
+        Background="Transparent"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="806" Width="1428"
+        >
+
+
+    <Window.DataContext>
+        <viewModel:MainWindowViewModel />
+    </Window.DataContext>
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewModel:DragDropViewModel}">
+            <views:DragDropView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:GraphViewModel}">
+            <views:GraphView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:TableViewModel}">
+            <views:TableView />
+        </DataTemplate>
+    </Window.Resources>
+    
+    <Grid>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60" />
+            <ColumnDefinition Width="684" />
+            <ColumnDefinition Width="684" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.Background>
+            <ImageBrush ImageSource="pack://application:,,,/Images/bg3.jpeg" Stretch="UniformToFill"/>
+        </Grid.Background>
+
+        <Menu Grid.Column="0">
+            <MenuItem
+                     Name="ImagesUploadPageMenuItem2"
+                     Command="{Binding MyButtonClickCommand}"
+                     CommandParameter="TableViewModel"
+                     Cursor="Hand"
+                     ToolTip="Measurement Graph View" 
+                     Height="60"
+                     Width="60"
+                     Margin="0,0,0,0"
+                     Header="View1"
+                     >
+            </MenuItem>
+            <MenuItem
+                     Name="ImagesUploadPageMenuItem"
+                     Command="{Binding MyButtonClickCommand}"
+                     CommandParameter="GraphViewModel"
+                     Cursor="Hand"
+                     ToolTip="Network Display View" 
+                     Height="60"
+                     Width="60"
+                     Header="View2"
+                     Margin="0,0,0,0"
+                    >
+            </MenuItem>
+            <MenuItem
+                    Command="{Binding CloseWindowCommand}"
+                    CommandParameter="{Binding ElementName=MainWindowName}"
+                    Name="DragDropPageMenuItem"
+                    Height="60"
+                    Width="60"
+                    Cursor="Hand"
+                    Header="Close"
+                    Margin="0,0,0,0"
+                    ToolTip="Network Entities View">
+            </MenuItem>
+        </Menu>
+
+        <Grid Grid.Column="1">
+            <views:DragDropView x:Name="DragDropViewModel" />
+        </Grid>
+
+        <Frame x:Name="MainFrame" Grid.Column="2" Content="{Binding CurrentView}" NavigationUIVisibility="Hidden" />
+
+
+    </Grid>
+</Window>
